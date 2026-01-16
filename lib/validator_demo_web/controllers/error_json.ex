@@ -15,6 +15,11 @@ defmodule ValidatorDemoWeb.ErrorJSON do
   end
 
   def render(template, _assigns) do
-    ApiResponse.json_response(false, %{}, Phoenix.Controller.status_message_from_template(template), 500)
+    ApiResponse.json_response(
+      false,
+      %{},
+      Phoenix.Controller.status_message_from_template(template),
+      500
+    )
   end
 end

@@ -128,7 +128,7 @@ defmodule ValidatorDemo.AccountsTest do
     end
 
     test "returns error for non-existent email" do
-      assert {:error, :not_found} =
+      assert {:error, :user_not_found} =
                Accounts.authenticate_user("nonexistent@example.com", "password")
     end
   end

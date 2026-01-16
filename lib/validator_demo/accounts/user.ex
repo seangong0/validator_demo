@@ -3,6 +3,16 @@ defmodule ValidatorDemo.Accounts.User do
   import Ecto.Changeset
   import Bcrypt
 
+  @type t :: %__MODULE__{
+          id: Ecto.UUID.t(),
+          email: String.t(),
+          password: String.t() | nil,
+          password_hash: String.t() | nil,
+          nickname: String.t(),
+          inserted_at: NaiveDateTime.t() | nil,
+          updated_at: NaiveDateTime.t() | nil
+        }
+
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "users" do
     field :email, :string

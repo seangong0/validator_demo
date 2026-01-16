@@ -33,7 +33,7 @@ defmodule ValidatorDemoWeb.Validators.UserValidator do
     end
   end
 
-  def validate_uuid(_id), do: {:error, "id must be a string"}
+  def validate_uuid(_id), do: {:error, "id must be a UUID"}
 
   defp handle_changeset(changeset, action) do
     case apply_action(changeset, action) do

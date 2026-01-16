@@ -33,7 +33,8 @@ defmodule ValidatorDemoWeb.Helpers.ApiResponse do
 
   def unprocessable_entity(conn, errors), do: failed(conn, errors, 422)
 
-  def internal_server_error(conn, errors \\ "Internal Server Error"), do: failed(conn, errors, 500)
+  def internal_server_error(conn, errors \\ "Internal Server Error"),
+    do: failed(conn, errors, 500)
 
   def failed(conn, error_data, status_code \\ 400) do
     render_api(conn, status_code, false, %{}, error_data)
@@ -48,7 +49,9 @@ defmodule ValidatorDemoWeb.Helpers.ApiResponse do
   # ============ 内部函数 ============
 
   defp maybe_put_location(conn, nil), do: conn
-  defp maybe_put_location(conn, location), do: put_resp_header(conn, "location", to_string(location))
+
+  defp maybe_put_location(conn, location),
+    do: put_resp_header(conn, "location", to_string(location))
 
   defp render_api(conn, status_code, success, result, errors) do
     conn
@@ -65,7 +68,9 @@ defmodule ValidatorDemoWeb.Helpers.ApiResponse do
     |> maybe_put_status_code(status_code)
   end
 
-  defp maybe_put_status_code(response, status_code) when is_integer(status_code), do: Map.put(response, :status_code, status_code)
+  defp maybe_put_status_code(response, status_code) when is_integer(status_code),
+    do: Map.put(response, :status_code, status_code)
+
   defp maybe_put_status_code(response, _), do: response
 
   defp format_errors(%Ecto.Changeset{} = changeset) do

@@ -3,6 +3,7 @@ defmodule ValidatorDemo.Accounts do
   alias ValidatorDemo.Repo
   alias ValidatorDemo.Accounts.User
 
+  @spec get_user!(Ecto.UUID.t()) :: User.t()
   def get_user!(id), do: Repo.get!(User, id)
 
   def get_user(id), do: Repo.get(User, id)
@@ -33,7 +34,7 @@ defmodule ValidatorDemo.Accounts do
         end
 
       nil ->
-        {:error, :not_found}
+        {:error, :user_not_found}
     end
   end
 
