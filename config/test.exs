@@ -15,7 +15,9 @@ config :validator_demo, ValidatorDemo.Repo,
 # you can enable the server option below.
 config :validator_demo, ValidatorDemoWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "beKSbRhSs2JD_yuhXrV0mg3iSwHm9ZVT6wQKKg7FBE90mpL4CaUpu2mnxUk8fSR1",
+  secret_key_base:
+    System.get_env("SECRET_KEY_BASE") ||
+      "beKSbRhSs2JD_yuhXrV0mg3iSwHm9ZVT6wQKKg7FBE90mpL4CaUpu2mnxUk8fSR1",
   server: false
 
 # Print only warnings and errors during test

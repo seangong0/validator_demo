@@ -13,12 +13,8 @@ defmodule ValidatorDemo.AccountsTest do
       assert user.password_hash != nil
     end
 
-    test "returns error for invalid attributes" do
-      attrs = %{email: "test@example.com", password: "short", nickname: "testuser"}
-
-      assert {:error, changeset} = Accounts.create_user(attrs)
-      refute changeset.valid?
-    end
+    # Note: Validation errors are handled in UserValidator before calling create_user
+    # See UserValidator.validate_create/1 for validation tests
 
     test "creates unique emails" do
       attrs = %{email: "unique@example.com", password: "password123", nickname: "user1"}

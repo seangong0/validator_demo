@@ -13,12 +13,13 @@ config :validator_demo, ValidatorDemo.Repo,
 # to bundle .js and .css sources.
 # Binding to loopback ipv4 address prevents access from other machines.
 config :validator_demo, ValidatorDemoWeb.Endpoint,
-  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "wTGp8J_C9khtIs0ugQFlLvDtmKPaf-ozY9eZVyrU2E4YWIS2ZmvdQvU3Yn8-6_Sp",
+  secret_key_base:
+    System.get_env("SECRET_KEY_BASE") ||
+      "wTGp8J_C9khtIs0ugQFlLvDtmKPaf-ozY9eZVyrU2E4YWIS2ZmvdQvU3Yn8-6_Sp",
   watchers: []
 
 # ## SSL Support

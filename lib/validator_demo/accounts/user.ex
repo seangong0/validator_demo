@@ -26,8 +26,6 @@ defmodule ValidatorDemo.Accounts.User do
   def create_changeset(user, attrs) do
     user
     |> cast(attrs, [:email, :password, :nickname])
-    |> validate_required([:email, :password, :nickname])
-    |> validate_length(:password, min: 8)
     |> unique_constraint(:email)
     |> hash_password_if_present()
   end

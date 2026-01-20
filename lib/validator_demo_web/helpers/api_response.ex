@@ -21,19 +21,19 @@ defmodule ValidatorDemoWeb.Helpers.ApiResponse do
 
   # ============ 错误响应 ============
 
-  def bad_request(conn, errors \\ "Bad Request"), do: failed(conn, errors, 400)
+  def bad_request(conn, errors \\ :bad_request), do: failed(conn, errors, 400)
 
-  def unauthorized(conn, errors \\ "Unauthorized"), do: failed(conn, errors, 401)
+  def unauthorized(conn, errors \\ :unauthorized), do: failed(conn, errors, 401)
 
-  def forbidden(conn, errors \\ "Forbidden"), do: failed(conn, errors, 403)
+  def forbidden(conn, errors \\ :forbidden), do: failed(conn, errors, 403)
 
-  def not_found(conn, errors \\ "Not Found"), do: failed(conn, errors, 404)
+  def not_found(conn, errors \\ :not_found), do: failed(conn, errors, 404)
 
-  def conflict(conn, errors \\ "Conflict"), do: failed(conn, errors, 409)
+  def conflict(conn, errors \\ :conflict), do: failed(conn, errors, 422)
 
   def unprocessable_entity(conn, errors), do: failed(conn, errors, 422)
 
-  def internal_server_error(conn, errors \\ "Internal Server Error"),
+  def internal_server_error(conn, errors \\ :internal_server_error),
     do: failed(conn, errors, 500)
 
   def failed(conn, error_data, status_code \\ 400) do
@@ -83,7 +83,8 @@ defmodule ValidatorDemoWeb.Helpers.ApiResponse do
   end
 
   defp format_errors(errors) when is_list(errors), do: errors
+  defp format_errors(error) when is_atom(error), do: [Atom.to_string(error)]
   defp format_errors(error) when is_binary(error), do: [error]
   defp format_errors(nil), do: []
-  defp format_errors(_), do: ["Unknown error"]
+  defp format_errors(_), do: ["unknown_error"]
 end

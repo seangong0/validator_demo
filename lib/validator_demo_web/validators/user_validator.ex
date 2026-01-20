@@ -2,6 +2,13 @@ defmodule ValidatorDemoWeb.Validators.UserValidator do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @moduledoc """
+  Input validation for user operations.
+  Returns {:ok, map} or {:error, Ecto.Changeset.t(), :validation}.
+  """
+
+  @email_regex ~r/^[^\s]+@[^\s]+$/
+
   embedded_schema do
     field :email, :string
     field :password, :string
@@ -12,7 +19,7 @@ defmodule ValidatorDemoWeb.Validators.UserValidator do
     %__MODULE__{}
     |> cast(params, [:email, :password, :nickname])
     |> validate_required([:email, :password, :nickname])
-    |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must be a valid email")
+    |> validate_format(:email, @email_regex, message: "must be a valid email")
     |> validate_length(:password, min: 6)
     |> validate_length(:nickname, min: 2, max: 50)
     |> handle_changeset(:insert)
@@ -25,15 +32,6 @@ defmodule ValidatorDemoWeb.Validators.UserValidator do
     |> validate_length(:nickname, min: 2, max: 50)
     |> handle_changeset(:update)
   end
-
-  def validate_uuid(id) when is_binary(id) do
-    case Ecto.Type.cast(Ecto.UUID, id) do
-      {:ok, _} -> :ok
-      :error -> {:error, "invalid UUID format"}
-    end
-  end
-
-  def validate_uuid(_id), do: {:error, "id must be a UUID"}
 
   defp handle_changeset(changeset, action) do
     case apply_action(changeset, action) do

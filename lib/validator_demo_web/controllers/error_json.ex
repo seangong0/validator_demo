@@ -7,19 +7,14 @@ defmodule ValidatorDemoWeb.ErrorJSON do
   alias ValidatorDemoWeb.Helpers.ApiResponse
 
   def render("404.json", _assigns) do
-    ApiResponse.json_response(false, %{}, "Not Found", 404)
+    ApiResponse.json_response(false, %{}, :not_found, 404)
   end
 
   def render("500.json", _assigns) do
-    ApiResponse.json_response(false, %{}, "Internal Server Error", 500)
+    ApiResponse.json_response(false, %{}, :internal_server_error, 500)
   end
 
-  def render(template, _assigns) do
-    ApiResponse.json_response(
-      false,
-      %{},
-      Phoenix.Controller.status_message_from_template(template),
-      500
-    )
+  def render(_template, _assigns) do
+    ApiResponse.json_response(false, %{}, :internal_server_error, 500)
   end
 end
